@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// 我的
+
 class MinePage extends StatefulWidget {
   @override
   _MinePageState createState() => _MinePageState();
@@ -9,7 +11,7 @@ class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('12313'),
+      child: Text('我的'),
     );
   }
 }
