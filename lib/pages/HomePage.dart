@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 首页
@@ -16,7 +14,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    getBannerData();
     super.initState();
   }
 
@@ -26,27 +23,43 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('听我唱'),
       ),
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            SwiperDiy(
-              swiperDataList: swiper,
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: request('banner'),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //snapshot就是_calculation在时间轴上执行过程的状态快照
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return new Text(
+                  'Press button to start'); //如果_calculation未执行则提示：请点击开始
+            case ConnectionState.waiting:
+              return new Text('Awaiting result...'); //如果_calculation正在执行则提示：加载中
+            default: //如果_calculation执行完毕
+              if (snapshot.hasError) //若_calculation执行出现异常
+                return new Text('Error: ${snapshot.error}');
+              else {
+                //若_calculation执行正常完成
+                var json = snapshot.data;
+                return ListView(
+                  children: <Widget>[
+                    SwiperDiy(
+                      swiperDataList: json['banners'],
+                    ),
+                  ],
+                );
+              }
+          }
+        },
       ),
+      // body: Container(
+      //   child: ListView(
+      //     children: <Widget>[
+      //       SwiperDiy(
+      //         swiperDataList: swiper,
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
-  }
-
-  void getBannerData() {
-    request('banner').then((value) {
-      if (value != null) {
-        setState(() {
-          this.swiper = (value['banners'] as List).cast();
-          // print(this.swiper);
-        });
-      }
-    });
   }
 }
 

@@ -14,7 +14,6 @@ void main() {
 }
 
 class Sing4You extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,6 +22,7 @@ class Sing4You extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
         primaryColorBrightness: Brightness.dark,
+        splashColor: Colors.transparent,
       ),
       home: MainPage(),
     );
