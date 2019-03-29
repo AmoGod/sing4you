@@ -14,7 +14,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
-
   PageController pageController;
   int page = 0;
 
@@ -41,7 +40,9 @@ class _MainPageState extends State<MainPage>
     //  ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
     // 设置字体大小根据系统的“字体大小”辅助选项来进行缩放,默认为false : 字体随着系统的“字体大小”辅助选项来进行缩放
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true)..init(context);
+    ScreenUtil.instance =
+        ScreenUtil(width: 750, height: 1334, allowFontScaling: true)
+          ..init(context);
 
     return Scaffold(
       body: PageView(
@@ -106,7 +107,8 @@ class _MainPageState extends State<MainPage>
         ),
         Container(
           width: ScreenUtil().setWidth(150),
-          child: Text('*',
+          child: Text(
+            '*',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
@@ -145,12 +147,6 @@ class _MainPageState extends State<MainPage>
     setState(() {
       this.page = index;
     });
-    pageController.animateToPage(
-      index,
-      duration: Duration(
-        milliseconds: 300,
-      ),
-      curve: Curves.ease,
-    );
+    pageController.jumpToPage(index);
   }
 }

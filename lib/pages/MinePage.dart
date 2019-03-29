@@ -10,8 +10,13 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('我的'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('我的'),
+      ),
+      body: Center(
+        child: Text('789'),
+      ),
     );
   }
 }

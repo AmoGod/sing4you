@@ -10,8 +10,13 @@ class ReleasePage extends StatefulWidget {
 class _ReleasePageState extends State<ReleasePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('发布'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('发布'),
+      ),
+      body: Center(
+        child: Text('123456789'),
+      ),
     );
   }
 }

@@ -10,8 +10,13 @@ class CirclePage extends StatefulWidget {
 class _CirclePageState extends State<CirclePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('圈子'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('圈子'),
+      ),
+      body: Center(
+        child: Text('456'),
+      ),
     );
   }
 }
