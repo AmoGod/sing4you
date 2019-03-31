@@ -13,20 +13,7 @@ class _CommendPageState extends State<CommendPage> {
 
   @override
   void initState() {
-    getRecommendSong();
     super.initState();
-  }
-
-  void getRecommendSong() async {
-    var data = {'limit': 12};
-    await request(
-      'top/mv',
-      formData: data,
-    ).then((value) {
-      setState(() {
-        recommendList = value['data'];
-      });
-    });
   }
 
   @override
@@ -130,29 +117,32 @@ class FloorItem extends StatelessWidget {
 }
 
 // 每日推荐歌单
-class RecommentSongs extends StatelessWidget {
-  final List recommendList;
+class RecommentSongs extends StatefulWidget {
+  @override
+  _RecommentSongsState createState() => _RecommentSongsState();
+}
 
-  RecommentSongs({Key key, this.recommendList}) : super(key: key);
+class _RecommentSongsState extends State<RecommentSongs> {
+  List recommendList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getRecommentData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (recommendList.length > 0) {
-      return Container(
-        height: ScreenUtil().setHeight(350),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: recommendList.length,
-          itemBuilder: (context, index) {
-            return _item(index);
-          },
-        ),
-      );
-    } else {
-      return Center(
-        child: Text('暂时列表'),
-      );
-    }
+    return Container(
+      height: ScreenUtil().setHeight(350),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: recommendList.length,
+        itemBuilder: (context, index) {
+          return _item(index);
+        },
+      ),
+    );
   }
 
   Widget _item(int index) {
@@ -173,5 +163,14 @@ class RecommentSongs extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void getRecommentData() async {
+    await request('top/mv').then((value) {
+      print(value);
+      setState(() {
+        recommendList = value['data'];
+      });
+    });
   }
 }
