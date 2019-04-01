@@ -4,4 +4,5 @@ const servicePath = {
   'banner': serviceUrl + 'banner', // banner 轮播
   'top/list': serviceUrl + 'top/list', // 排行榜  "0": 云音乐新歌榜, "1": 云音乐热歌榜,
   'top/mv': serviceUrl + 'top/mv', // mv排行
+  'login/status': serviceUrl + 'login/status', // 获取登录状态
 };

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:convert';
 
 class CommendPage extends StatefulWidget {
   _CommendPageState createState() => _CommendPageState();

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import './utils/ShardPreferencesUser.dart';
+import './utils/User.dart';
+import '../service/service_method.dart';
+import '../model/UserInfo.dart';
+import '../provide/UserInfo.dart';
+import 'package:provide/provide.dart';
 
 import './HomePage.dart';
 import './CirclePage.dart';
 import './ReleasePage.dart';
 import './CrowdfundPage.dart';
 import './MinePage.dart';
+import './LoginPage.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -16,10 +24,12 @@ class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   PageController pageController;
   int page = 0;
+  List<User> _users = new List();
 
   @override
   void initState() {
     super.initState();
+    _gainUsers();
     pageController = PageController(
       initialPage: this.page,
     );
@@ -148,5 +158,32 @@ class _MainPageState extends State<MainPage>
       this.page = index;
     });
     pageController.jumpToPage(index);
+  }
+
+  // 获取历史用户
+  void _gainUsers() async {
+    _users.clear();
+    _users.addAll(await SharedPreferenceUserUtil.getUsers());
+
+    if (_users.length > 0) {
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      String phone = sp.getString('phone0');
+      String password = sp.getString('password0');
+      var data = {
+        'phone': phone,
+        'password': password,
+      };
+      await request('login/cellphone', formData: data).then((value) {
+        if (value['code'] == 200) {
+          Account account = Account.fromJson(value['account']);
+          Provide.value<UserInfoProvide>(context).setUserInfo(account);
+        }
+      });
+    } else {
+      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,
+          Animation<double> animation, Animation<double> secondaryAnimation) {
+        return LoginPage();
+      }));
+    }
   }
 }

@@ -2,9 +2,26 @@ import 'package:flutter/material.dart';
 import './pages/MainPage.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:provide/provide.dart';
+
+import './provide/Counter.dart';
+import './provide/UserInfo.dart';
 
 void main() {
-  runApp(Sing4You());
+  var counter = Counter();
+  var userInfoProvide = UserInfoProvide();
+  var providers = Providers();
+
+  providers
+    ..provide(Provider<Counter>.value(counter))
+    ..provide(Provider<UserInfoProvide>.value(userInfoProvide));
+
+  runApp(
+    ProviderNode(
+      child: Sing4You(),
+      providers: providers,
+    ),
+  );
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

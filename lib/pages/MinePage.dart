@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../pages/LoginPage.dart';
 
 // 我的
-
 class MinePage extends StatefulWidget {
   @override
   _MinePageState createState() => _MinePageState();
@@ -15,7 +15,16 @@ class _MinePageState extends State<MinePage> {
         title: Text('我的'),
       ),
       body: Center(
-        child: Text('789'),
+        child: FlatButton(
+          child: Text('登录'),
+          onPressed: () {
+            Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              return LoginPage();
+            }));
+          },
+        ),
       ),
     );
   }

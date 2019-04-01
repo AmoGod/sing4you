@@ -28,6 +28,8 @@ dependencies:
   flutter_swiper: ^1.1.4
   flutter_easyrefresh: ^1.2.7
   provide: ^1.0.2
+  shared_preferences: ^0.5.1+2
+  audioplayers: ^0.7.8
 
 dev_dependencies:
   flutter_test:
